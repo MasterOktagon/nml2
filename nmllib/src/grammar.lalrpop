@@ -1,0 +1,102 @@
+use std::str::FromStr;
+use crate::ast::*;
+
+grammar;
+
+// TERMINALS
+// these are the terminals (tokens) and how to lex them
+
+/// Identifier used for names
+Id: String = <s: r"[a-z_A-Z][a-zA-Z0-9_]*"> => s.to_string();
+
+/// String literal
+String: String = <s: r#""([^"\\]|\\.)*""#> => s.to_string();
+Int: i64 = <s: r"\d+">                => i64::from_str(s).unwrap();
+Hex: i64 = <s: r"0x[a-fA-F0-9]+"> => i64::from_str_radix(&s[2..], 16).unwrap();
+
+/// Num is hex or base-10
+Num: i64 = {
+    <int: Int> => int,
+    <hex: Hex> => hex,
+};
+
+// Mathematical Symbols
+Add = r"\+";
+Sub = r"\-";
+Mul = r"\*";
+Div = r"\/";
+Mod = r"\%";
+
+And = r"&";
+Or  = r"\|";
+Xor = r"\^";
+Not = r"~";
+Shl = r"<<";
+Shr = r">>";
+Shru = r">>>";
+
+LogAnd = r"&&";
+LogOr  = r"\|\|";
+LogNot = r"!";
+
+LParen = r"\(";
+RParen = r"\)";
+LIndex = r"\[";
+RIndex = r"\]";
+LBlock = r"\{";
+RBlock = r"\}";
+
+Eq  = r"==";
+Lt  = r"<";
+Gt  = r">";
+Leq = r"<=";
+Geq = r"<=";
+Neq = r"!=";
+
+Set = r"=";
+Comma = ",";
+Range = r"\.\.";
+Ternary = r"\?";
+Colon = r":";
+Semicolon = r";";
+
+Unit: Unit = {
+    "nfo" => Unit::Nfo,
+    "mph" => Unit::Mph,
+    "km/h" => Unit::Kmh,
+    "m/s" => Unit::Ms,
+    "hpI" => Unit::Hpi,
+    "hpM" => Unit::Hpm,
+    "hp" => Unit::Hp,
+    "kW" => Unit::Kw,
+    "tons" => Unit::Tons,
+    "ton" => Unit::Ton,
+    "kg" => Unit::Kg,
+    "snow%" => Unit::SnowPct
+}
+
+// KEYWORDS
+Var = "var";
+Param = "param";
+Cargotable = "cargotable";
+Badgetable = "badgetable";
+Railtypetable = "railtypetable";
+Roadtypetable = "roadtypetable";
+Tramtypetable = "tramtypetable";
+If = "if";
+Else = "else";
+While = "while";
+
+// GRF BLOCK
+Grf = "grf";
+GrfBlock: GrfMetadata = {
+    Grf LBlock RBlock => GrfMetadata { }
+}
+
+
+// TODO
+
+// NML MAIN BLOCK
+pub Nml: NmlModule = {
+    GrfBlock => NmlModule{ }
+}

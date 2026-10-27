@@ -1,14 +1,9 @@
-pub fn add(left: u64, right: u64) -> u64 {
-    left + right
-}
+//! NMLLib is the rust library that contains all the actual code that does the work of compiling NML into NFO.
+//! I decided to split this into an extra subcrate since it allows developers who want to use their own build stack
+//! or preprocessing to automate things to simply include this in their project and use the library without
+//! needing to interfere with the CLI
+//! 
+//! Documentation of this crate contains the internals of NML2 and does not contain instructions on how to use NML.
 
-#[cfg(test)]
-mod tests {
-    use super::*;
-
-    #[test]
-    fn it_works() {
-        let result = add(2, 2);
-        assert_eq!(result, 4);
-    }
-}
+pub mod ast;
+pub mod parser;
