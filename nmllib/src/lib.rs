@@ -6,4 +6,7 @@
 //! Documentation of this crate contains the internals of NML2 and does not contain instructions on how to use NML.
 
 pub mod ast;
-pub mod parser;
+pub mod reports;
+
+use lalrpop_util::lalrpop_mod;
+lalrpop_mod!(pub parser);
