@@ -12,4 +12,4 @@ The NML2 compiler can and should be built using the rust package framework `carg
 
 ### Semantic Versioning
 
-this project adheres to semantic versioning with one major difference: NML 1.0 was written in python, so release version numbers will begin with 2.0.0
+this project adheres to semantic versioning with one major difference: NML 1.x was written in python, so release version numbers will begin with 2.0.0
